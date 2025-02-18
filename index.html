@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JS CRUD with JSON Example</title>
+</head>
+<body>
+  <h1>JavaScript CRUD (JSON + localStorage)</h1>
+  <script>
+    // Initialize localStorage if it doesn't have our "items" key
+    if (!localStorage.getItem('items')) {
+      localStorage.setItem('items', JSON.stringify([]));
+    }
+    
+    // Create: Add a new item
+    function createItem(newItem) {
+      const items = JSON.parse(localStorage.getItem('items'));
+      items.push(newItem);
+      localStorage.setItem('items', JSON.stringify(items));
+    }
+    
+    // Read: Retrieve all items
+    function readItems() {
+      return JSON.parse(localStorage.getItem('items'));
+    }
+    
+    // Update: Modify an item by its index
+    function updateItem(index, updatedItem) {
+      const items = JSON.parse(localStorage.getItem('items'));
+      if (index >= 0 && index < items.length) {
+        items[index] = updatedItem;
+        localStorage.setItem('items', JSON.stringify(items));
+      }
+    }
+    
+    // Delete: Remove an item by its index
+    function deleteItem(index) {
+      const items = JSON.parse(localStorage.getItem('items'));
+      if (index >= 0 && index < items.length) {
+        items.splice(index, 1);
+        localStorage.setItem('items', JSON.stringify(items));
+      }
+    }
+    
+    // Example usage:
+    // Create two new items
+    createItem({ id: 1, name: 'Item 1' });
+    createItem({ id: 2, name: 'Item 2' });
+    
+    console.log('All items after creation:', readItems());
+    
+    // Update the first item
+    updateItem(0, { id: 1, name: 'Updated Item 1' });
+    console.log('After update:', readItems());
+    
+    // Delete the second item
+    deleteItem(1);
+    console.log('After deletion:', readItems());
+  </script>
+</body>
+</html>
